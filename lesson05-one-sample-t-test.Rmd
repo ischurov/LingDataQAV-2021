@@ -1,0 +1,97 @@
+---
+title: "One sample t-test"
+output:
+  html_document:
+    df_print: paged
+---
+
+### Do we see significant difference?
+
+Is it true that average of our sample is larger than 180 in statistically significant way? In other terms, can we reject null hypothesis that sample is obtained from the population with population mean that is equal to 180 in favor of an  alternative that population mean is larger than 180?
+
+In other words, can we assume that the difference between sample mean and reference population mean (180) is due to randomness, or it shows that the actual population mean is larger than 180?
+
+Consider several samples:
+
+```{r}
+sample1 <- c(170, 181, 190, 187, 185)
+```
+
+Let's find sample mean:
+
+```{r}
+mean(sample1)
+```
+It's larger than 180. But is it significant difference? First, give your guess. Then, use `t.test` function to get p-value and obtain answer:
+
+```{r}
+t.test(sample1, mu=180, alternative = 'greater')
+```
+Can we conclude that the difference is statistically significant?
+
+Now repeat the same steps with the following samples. Try to guess the result before you proceed, and explain which factors you take into account in your guesses. 
+
+
+```{r}
+sample2 <- c(183, 182, 183.1, 182.3, 182.6)
+```
+
+```{r}
+sample3 <- c(190, 180, 210, 190, 200)
+```
+
+```{r}
+sample4 <- c(170, 181, 190, 187, 185, 170, 181, 190, 187, 185, 170, 181, 190, 187, 185, 170, 181, 190, 187, 185, 170, 181, 190, 187, 185)
+```
+
+### Working with data
+We use package `languageR` that accompanies book by Baayen and use dataset `durationsOnt` from this package (Pluymaekers et al., 2005).
+
+
+```{r}
+install.packages("languageR")
+library(languageR)
+data(durationsOnt)
+```
+
+```{r}
+durationsOnt
+```
+
+Calculate the mean length of the n (variable `DurationPrefixNasal`):
+
+```{r}
+# YOUR CODE HERE
+```
+Visualize the distribution of this variable with histogram.
+
+```{r}
+# YOUR CODE HERE
+```
+Suppose that previous research of similar recordings had resulted in a mean of 0.053. Is the mean observed for the new sample significantly smaller than 0.053? State your null hypothesis and an alternative, then use `t.test` to get p-value and answer the question. Use 5% significance level.
+
+```{r}
+# YOUR CODE HERE
+```
+
+### Simulations
+Let us test that t-test work as expected, i.e. it gives false positive results in 5% times or less. To do it, consider the following simulation.
+
+```{r}
+population <- c(12, 15, 5, 13, 24, 3, 7, 14, 16, 17, 21, 14.3)
+sample_size <- 20
+number_of_samples <- 10000
+population_mean <- mean(population)
+false_positives <- 0
+for (i in 1:number_of_samples) {
+  sample <- sample(population, size = sample_size, replace = TRUE)
+  p_value <- t.test(sample, mu=population_mean, alternative="less")$p.value
+  # Null hypothesis holds, i.e. we compare sample mean with 
+  # actual population mean
+  if (p_value < 0.05) {
+    # falsely reject null hypothesis
+    false_positives <- false_positives + 1
+  }
+}
+print(paste("False positive rate:", false_positives / number_of_samples))
+```
