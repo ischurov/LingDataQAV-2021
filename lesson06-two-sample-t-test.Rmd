@@ -1,0 +1,89 @@
+---
+title: "Two sample t-test"
+output: html_notebook
+---
+
+## Synthetic data
+
+```{r}
+sample1 <- c(1, 5, 4, 3, 5)
+sample2 <- c(4, 30, 20, 5, 10, 50)
+mean(sample1)
+mean(sample2)
+```
+
+Null hypothesis: these two samples are drawn from populations with the same mean. Difference between sample means should be attributed to sampling error, i.e. randomness in the sampling process.
+
+Mathematically speaking:
+$$H_0\colon \mu_1 = \mu_2$$
+
+Alternative: samples are drawn from populations with different means. Difference between sample means cannot be attributed to sampling error. We didn't have any ideas which population has larger mean before looking at the data. 
+
+Mathematically speaking:
+$$H_0\colon \mu_1 \ne \mu_2.$$
+Should we reject null hypothesis in favor of alternative?
+
+```{r}
+t.test(sample1, sample2)
+```
+You can change your samples to get some feeling on how the results depend on the samples.
+
+### Alternatives
+What changes if we know before looking at the data that we are interested only in the alternative when mean of the first population is smaller than the mean of the second population? (For example, we do drug trial and first sample is from the treatment group who actually received the drug and the second sample is from the control group who receieved placebo; assume that values are disease duration, i.e. the smaller the better. Then we are interested in the case when the drug is effective, i.e. decrease disease duration, but not interested in the case when drug is ineffective, meaning both that it does not affect the disease duration or incrase it.)
+
+```{r}
+t.test(sample1, sample2, alternative = 'less')
+```
+What happens if we are interested in the opposite alternative? Why this happens?
+
+```{r}
+t.test(sample1, sample2, alternative = 'greater')
+```
+Now we can proceed with dataframes.
+
+```{r}
+dat <- bind_rows(
+  data.frame(value=sample1, sample_id=1),
+  data.frame(value=sample2, sample_id=2)
+)
+dat
+```
+```{r}
+t.test(value ~ sample_id, data=dat)
+```
+## Data example
+Consider the following dataset. 
+
+This data set gives mean visual lexical decision latencies and word naming latencies to 2284 monomorphemic English nouns and verbs, averaged for old and young subjects, with various predictor variables.
+
+Data sources:
+
+Balota, D., Cortese, M., Sergent-Marshall, S., Spieler, D. and Yap, M. (2004) Visual word recognition for single-syllable words, Journal of Experimental Psychology:General, 133, 283-316.
+
+Baayen, R.H., Feldman, L. and Schreuder, R. (2006) Morphological influences on the recognition of monosyllabic monomorphemic words, Journal of Memory and Language, 53, 496-512.
+
+```{r}
+dat <- read.csv("http://math-info.hse.ru/f/2018-19/ling-data/english.csv")
+```
+```{r}
+colnames(dat)
+```
+```{r}
+dim(dat)
+```
+
+Assume that we are interested in the following question: is it true that the reaction time in naming task (RTnaming) depends on WordCategory (noun or verb)? I.e. assume that the values of RTnaming are drawn from two populations, one for Nouns and another for Verbs. Can we conclude that these two population has different means? We don't have any preferences before looking at the data (i.e. are equally interested in case when RTnaming is larger for Verbs and in case when it is smaller for Verbs).
+
+State null hypothesis and alternative.
+
+Use `t.test` function to answer the question.
+
+```{r}
+# YOUR CODE HERE
+```
+
+The same question for RTlexdec.
+
+```{r}
+# YOUR CODE HERE
+```
