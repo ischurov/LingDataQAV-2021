@@ -1,0 +1,69 @@
+---
+title: 'Lesson 06: The review'
+output:
+  html_document:
+    df_print: paged
+---
+
+## Problem 1: the magician strikes back
+
+Assume that a person is claiming to have paranormal abilities. To test these abilities, we perform the following experiment. There is a box with one red and two blue balls. The balls are identical in every aspect but color. An assistant shuffles the box, pick a ball from it randomly, then record its color and return the ball to the box. This process is repeated several times. The magician tries to guess the result of these pickings (the more the better).
+
+### The best strategy
+What is the best strategy for the magician if he actually doesn't have magicial abilities?
+
+### The model
+Assume that we pick a ball 12 times, and the number of correct guesses is $X$. Restate the problem in terms of coin-tossing. Would you use a fair coin?
+
+### Hypothesis
+State your null hypothesis and an alternative in terms of the coin-tossing model.
+
+### Decision rule
+The organizers would claim that the magician actually have magical abilities if he guesses 12 times out of 12. Assume that the magician doesn't have magical abilities and follows the best strategy. What is the probability to make type I error? Type II error?
+
+### Decision rule
+Assume that we claim that the person has magicial abilities if he guesses $X_{crit}$ times or more. Find the smallest value of $X_{crit}$ such that probability to make type I error is less than 0.05.
+
+### p-value
+Assume that the magician guessed 10 times out of 12. Find the corresponding p-value. Would you reject null hypothesis, i.e. claim that the magician has magical abilities?
+
+## Problem 2: the magician and the mean
+Now the magician claims that he has psychokinetic abilities. To test it, we perform the following experiment. We have a box with five balls, each ball has a number on it: 1, 3, 4, 7, 8. Again we select random ball, record the number, then put the ball again in the box, and repeat the process several times. Thus we obtain a sample of numbers. The magician uses his abilities to make average of these numbers to be as large as possible.
+
+### Population mean
+Find population mean, i.e. average of numbers in the box.
+
+```{r}
+population <- c(1, 3, 4, 7, 8)
+sampl <- sample(population, 8, replace=TRUE)
+```
+```{r}
+mean(population)
+mean(sampl)
+sampl
+```
+
+### Sample mean vs. population mean
+Assume that at some experiment we obtained the following sample: 8, 3, 3, 1, 1, 7, 8, 7. Its mean (find it) is larger than the population mean. The magician says:
+
+> Now you see? I has psychokinetic abilities! I said I will increase the mean and it is indeed larger than the population mean.
+
+Does it look convincing?
+
+### More results
+Assume that you obtained sample mean that is equal to 8 and your sample size is 5. Does it look convincing now?
+
+### Hypotheses
+State null hypothesis and an alternative in this experiment.
+
+### The decision rule
+As the magician claims that he is trying to make the sample mean as large as possible, we use the following decision rule: we choose some value $\bar x_{crit}$ and will claim that the magician has magical abilities if sample average is equal to $\bar x_{crit}$ or larger. Let $\bar x_{crit}=7$. Assume that the magician doesn't have magical abilities. Simulate 10000 sampling from our box, sample size = 5. How many times would you reject null hypothesis, i.e. claim that the magician indeed has magical abilities?
+
+### Average distribution
+Plot the distribution of $\bar x$ for the previous subproblem.
+
+### Rejection region
+Find such smallest value $\bar x_{crit}$ that if you use this, the probability to make type I error would be less than 0.05. Use `quantile` function.
+
+### p-value
+Assume that we obtained the following data: 7, 8, 4, 8, 8. Find the corresponding p-value. Would you reject null hypothesis?
