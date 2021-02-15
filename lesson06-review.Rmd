@@ -7,22 +7,77 @@ output:
 
 ## Problem 1: the magician strikes back
 
-Assume that a person is claiming to have paranormal abilities. To test these abilities, we perform the following experiment. There is a box with one red and two blue balls. The balls are identical in every aspect but color. An assistant shuffles the box, pick a ball from it randomly, then record its color and return the ball to the box. This process is repeated several times. The magician tries to guess the result of these pickings (the more the better).
+Assume that a person is claiming to have paranormal abilities. To test these abilities, we perform the following experiment. There is a box with one red and two blue balls. The balls are identical in every aspect but color. An assistant shuffles the box, picks a ball from it randomly, then record its color and return the ball to the box. This process is repeated several times. The magician tries to guess the result of these pickings (the more the better).
 
 ### The best strategy
 What is the best strategy for the magician if he actually doesn't have magicial abilities?
 
+*Answer*: say "blue" every time.
+
 ### The model
-Assume that we pick a ball 12 times, and the number of correct guesses is $X$. Restate the problem in terms of coin-tossing. Would you use a fair coin?
+Assume that we pick a ball 12 times, the magician actually doesn't have magical abilities and just use the best strategy described above. Denote the number of correct guesses by $X$. State how can we obtain $X$ in terms of coin-tossing? 
+
+#### Answer
+Consider guessing of the result of one ball-picking. The outcome of this guessing is either "guessed correctly" or "made a mistake". If the magician just uses strategy _say 'blue' every time_, then probability of outcome "guessed correctly" is 2/3. Therefore, we can replace this "guessing of the result of one ball-picking" with one coin-tossing.
+
+Consider a special coin with words "guessed correctly" on one side and "made a mistake" on the other side. Assume it's a "loaded" coin, i.e. not fair: probability to land with words "guessed correctly" on top is 2/3.
+
+Then the outcome of one tossing of such a coin is the same as the outcome of one guessing the result of ball-picking (provided that the magician uses strategy _say 'blue' every time_).
+
+To simulate guessing the result of 12 ball-pickings, we can toss a coin 12 times. Number of correct guesses is equivalent to the number of cases when we have "guessed correctly" on top side of a coin. This is our number $X$.
+
+Finally, we can replace our very special with a bit more ordinary coin: assume that we have head and tail as usual, but probability to obtain "head" is 2/3. Then we toss this coin 12 times and count how many "heads" we had. This is $X$. 
 
 ### Hypothesis
-State your null hypothesis and an alternative in terms of the coin-tossing model.
+State your null hypothesis and an alternative in terms of the original question and in terms of the coin-tossing model.
+
+#### In terms of the original question
+$H_0$: The magician doesn't have magical abilities and uses strategy _say 'blue' every time_.
+
+$H_1$: The magician has magical abilities, that allow him to guess correct answer more frequently that with the best strategy known to mere mortals (i.e. _say 'blue' every time_).
+
+#### In terms of coin-tossing model
+In section [the model](#The model) above, we discussed that if there are no magical abilities and the magician uses best available strategy, the result of one guessing is equivalent to result of one coin-tossing with probability of success (i.e. "head" or "guessed correctly") equal to 2/3. However, if he has magical abilities, then this probability would be larger.
+
+Let us consider a coin that lands with "head" with probability $p$. Then our null hypothesis and alternative are stated as follows:
+
+$H_0$: $p=2/3$.
+
+$H_1$: $p>2/3$.
+
+Note that any $p$ that is larger then theoretically possible $2/3$ constitute violation of null hypothesis: i.e. even if the magician can predict correct result with probability $2/3 + 0.000000001$, he still a magician.
 
 ### Decision rule
-The organizers would claim that the magician actually have magical abilities if he guesses 12 times out of 12. Assume that the magician doesn't have magical abilities and follows the best strategy. What is the probability to make type I error? Type II error?
+Assume that the organizers would claim that the magician actually have magical abilities (i.e. reject null hypothesis) if he guesses 12 times out of 12, otherwise they will not claim that he has magical abilities (do not reject null hypothesis). Assume that the magician doesn't have magical abilities and follows the best strategy (thus null hypothesis is true). What is the probability to make type I error? Type II error?
+
+#### Recall
+
+Type I error: reject null hypothesis while it is true.
+
+Type II error: not reject null hypothesis while null hypothesis is false.
+
+#### Answer
+As we assume that null hypothesis holds, every time we reject it, we make type I error.
+
+Thus
+
+$$
+\begin{multline}
+P(\text{type I error}) = P(\text{reject null hypothesis}) = \\
+=P(\text{claim he is actually a magician}) = P(\text{guess 12 out of 12}) =\\
+=P((2/3)^{12}) = 0.007707347
+\end{multline}
+$$
+
+It is not possible to make type II error in this case as we assume that null hypothesis holds, and type II error can be made only in case null hypothesis does not hold.
+
+## Type II errors
+Assume that $p=3/4$ and thus $H_0$ is violated. We use the same decision rule as previously.
+
+Which error (type I, type II) can we make? Find corresponding probabilities.
 
 ### Decision rule
-Assume that we claim that the person has magicial abilities if he guesses $X_{crit}$ times or more. Find the smallest value of $X_{crit}$ such that probability to make type I error is less than 0.05.
+Assume that we claim that the person has magical abilities if he guesses $X_{crit}$ times or more. Find the smallest value of $X_{crit}$ such that probability to make type I error is less than 0.05.
 
 ### p-value
 Assume that the magician guessed 10 times out of 12. Find the corresponding p-value. Would you reject null hypothesis, i.e. claim that the magician has magical abilities?

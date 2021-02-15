@@ -1639,26 +1639,71 @@ summary {
 
 <div id="problem-1-the-magician-strikes-back" class="section level2">
 <h2>Problem 1: the magician strikes back</h2>
-<p>Assume that a person is claiming to have paranormal abilities. To test these abilities, we perform the following experiment. There is a box with one red and two blue balls. The balls are identical in every aspect but color. An assistant shuffles the box, pick a ball from it randomly, then record its color and return the ball to the box. This process is repeated several times. The magician tries to guess the result of these pickings (the more the better).</p>
+<p>Assume that a person is claiming to have paranormal abilities. To test these abilities, we perform the following experiment. There is a box with one red and two blue balls. The balls are identical in every aspect but color. An assistant shuffles the box, picks a ball from it randomly, then record its color and return the ball to the box. This process is repeated several times. The magician tries to guess the result of these pickings (the more the better).</p>
 <div id="the-best-strategy" class="section level3">
 <h3>The best strategy</h3>
 <p>What is the best strategy for the magician if he actually doesn’t have magicial abilities?</p>
+<p><em>Answer</em>: say “blue” every time.</p>
 </div>
 <div id="the-model" class="section level3">
 <h3>The model</h3>
-<p>Assume that we pick a ball 12 times, and the number of correct guesses is <span class="math inline">\(X\)</span>. Restate the problem in terms of coin-tossing. Would you use a fair coin?</p>
+<p>Assume that we pick a ball 12 times, the magician actually doesn’t have magical abilities and just use the best strategy described above. Denote the number of correct guesses by <span class="math inline">\(X\)</span>. State how can we obtain <span class="math inline">\(X\)</span> in terms of coin-tossing?</p>
+<div id="answer" class="section level4">
+<h4>Answer</h4>
+<p>Consider guessing of the result of one ball-picking. The outcome of this guessing is either “guessed correctly” or “made a mistake”. If the magician just uses strategy <em>say ‘blue’ every time</em>, then probability of outcome “guessed correctly” is 2/3. Therefore, we can replace this “guessing of the result of one ball-picking” with one coin-tossing.</p>
+<p>Consider a special coin with words “guessed correctly” on one side and “made a mistake” on the other side. Assume it’s a “loaded” coin, i.e. not fair: probability to land with words “guessed correctly” on top is 2/3.</p>
+<p>Then the outcome of one tossing of such a coin is the same as the outcome of one guessing the result of ball-picking (provided that the magician uses strategy <em>say ‘blue’ every time</em>).</p>
+<p>To simulate guessing the result of 12 ball-pickings, we can toss a coin 12 times. Number of correct guesses is equivalent to the number of cases when we have “guessed correctly” on top side of a coin. This is our number <span class="math inline">\(X\)</span>.</p>
+<p>Finally, we can replace our very special with a bit more ordinary coin: assume that we have head and tail as usual, but probability to obtain “head” is 2/3. Then we toss this coin 12 times and count how many “heads” we had. This is <span class="math inline">\(X\)</span>.</p>
+</div>
 </div>
 <div id="hypothesis" class="section level3">
 <h3>Hypothesis</h3>
-<p>State your null hypothesis and an alternative in terms of the coin-tossing model.</p>
+<p>State your null hypothesis and an alternative in terms of the original question and in terms of the coin-tossing model.</p>
+<div id="in-terms-of-the-original-question" class="section level4">
+<h4>In terms of the original question</h4>
+<p><span class="math inline">\(H_0\)</span>: The magician doesn’t have magical abilities and uses strategy <em>say ‘blue’ every time</em>.</p>
+<p><span class="math inline">\(H_1\)</span>: The magician has magical abilities, that allow him to guess correct answer more frequently that with the best strategy known to mere mortals (i.e. <em>say ‘blue’ every time</em>).</p>
+</div>
+<div id="in-terms-of-coin-tossing-model" class="section level4">
+<h4>In terms of coin-tossing model</h4>
+<p>In section <a href="#The%20model">the model</a> above, we discussed that if there are no magical abilities and the magician uses best available strategy, the result of one guessing is equivalent to result of one coin-tossing with probability of success (i.e. “head” or “guessed correctly”) equal to 2/3. However, if he has magical abilities, then this probability would be larger.</p>
+<p>Let us consider a coin that lands with “head” with probability <span class="math inline">\(p\)</span>. Then our null hypothesis and alternative are stated as follows:</p>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(p=2/3\)</span>.</p>
+<p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(p&gt;2/3\)</span>.</p>
+<p>Note that any <span class="math inline">\(p\)</span> that is larger then theoretically possible <span class="math inline">\(2/3\)</span> constitute violation of null hypothesis: i.e. even if the magician can predict correct result with probability <span class="math inline">\(2/3 + 0.000000001\)</span>, he still a magician.</p>
+</div>
 </div>
 <div id="decision-rule" class="section level3">
 <h3>Decision rule</h3>
-<p>The organizers would claim that the magician actually have magical abilities if he guesses 12 times out of 12. Assume that the magician doesn’t have magical abilities and follows the best strategy. What is the probability to make type I error? Type II error?</p>
+<p>Assume that the organizers would claim that the magician actually have magical abilities (i.e. reject null hypothesis) if he guesses 12 times out of 12, otherwise they will not claim that he has magical abilities (do not reject null hypothesis). Assume that the magician doesn’t have magical abilities and follows the best strategy (thus null hypothesis is true). What is the probability to make type I error? Type II error?</p>
+<div id="recall" class="section level4">
+<h4>Recall</h4>
+<p>Type I error: reject null hypothesis while it is true.</p>
+<p>Type II error: not reject null hypothesis while null hypothesis is false.</p>
 </div>
+<div id="answer-1" class="section level4">
+<h4>Answer</h4>
+<p>As we assume that null hypothesis holds, every time we reject it, we make type I error.</p>
+<p>Thus</p>
+<p><span class="math display">\[
+\begin{multline}
+P(\text{type I error}) = P(\text{reject null hypothesis}) = \\
+=P(\text{claim he is actually a magician}) = P(\text{guess 12 out of 12}) =\\
+=P((2/3)^{12}) = 0.007707347
+\end{multline}
+\]</span></p>
+<p>It is not possible to make type II error in this case as we assume that null hypothesis holds, and type II error can be made only in case null hypothesis does not hold.</p>
+</div>
+</div>
+</div>
+<div id="type-ii-errors" class="section level2">
+<h2>Type II errors</h2>
+<p>Assume that <span class="math inline">\(p=3/4\)</span> and thus <span class="math inline">\(H_0\)</span> is violated. We use the same decision rule as previously.</p>
+<p>Which error (type I, type II) can we make? Find corresponding probabilities.</p>
 <div id="decision-rule-1" class="section level3">
 <h3>Decision rule</h3>
-<p>Assume that we claim that the person has magicial abilities if he guesses <span class="math inline">\(X_{crit}\)</span> times or more. Find the smallest value of <span class="math inline">\(X_{crit}\)</span> such that probability to make type I error is less than 0.05.</p>
+<p>Assume that we claim that the person has magical abilities if he guesses <span class="math inline">\(X_{crit}\)</span> times or more. Find the smallest value of <span class="math inline">\(X_{crit}\)</span> such that probability to make type I error is less than 0.05.</p>
 </div>
 <div id="p-value" class="section level3">
 <h3>p-value</h3>
@@ -1676,9 +1721,9 @@ sampl &lt;- sample(population, 8, replace=TRUE)</code></pre>
 <pre class="r"><code>mean(population)</code></pre>
 <pre><code>## [1] 4.6</code></pre>
 <pre class="r"><code>mean(sampl)</code></pre>
-<pre><code>## [1] 4.125</code></pre>
+<pre><code>## [1] 5.5</code></pre>
 <pre class="r"><code>sampl</code></pre>
-<pre><code>## [1] 4 4 1 8 3 4 1 8</code></pre>
+<pre><code>## [1] 3 7 8 3 8 4 3 8</code></pre>
 </div>
 <div id="sample-mean-vs.-population-mean" class="section level3">
 <h3>Sample mean vs. population mean</h3>
