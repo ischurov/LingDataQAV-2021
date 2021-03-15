@@ -270,7 +270,7 @@ The result is so-called _box and whisker plot_ for variable `LogDurationA` group
 _Write your answer here_
 
 ### 3.3. Word duration in slow and fast condition
-Repeat 1.2 using word duration instead of segment duration. Run appropriate code and interpret the resulting figure.
+Repeat 3.2 using word duration instead of segment duration. Run appropriate code and interpret the resulting figure.
 ```{r}
 # YOUR CODE HERE
 ```
